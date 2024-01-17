@@ -12,8 +12,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        textTheme:
-            GoogleFonts.interTextTheme(), // Replace with your custom font
+        textTheme: GoogleFonts.interTextTheme(),
       ),
       home: MyHomePage(),
     );
@@ -55,7 +54,10 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text('ภาษาอังกฤษ', style: TextStyle(color: Colors.black)),
+        title: Text(
+          'ภาษาอังกฤษ',
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -92,7 +94,6 @@ class MyHomePage extends StatelessWidget {
               return _buildCard(
                 items[index]['title'],
                 items[index]['icon'],
-                cardTextStyle,
                 items[index]['color'],
               );
             },
@@ -102,8 +103,7 @@ class MyHomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildCard(String title, IconData iconData, TextStyle textStyle,
-      Color backgroundColor) {
+  Widget _buildCard(String title, IconData iconData, Color backgroundColor) {
     return Container(
       decoration: BoxDecoration(
         color: backgroundColor,
@@ -120,9 +120,9 @@ class MyHomePage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Icon(iconData, size: 48, color: textStyle.color),
+          Icon(iconData, size: 48, color: Colors.black),
           SizedBox(height: 8),
-          Text(title, style: textStyle),
+          Text(title, style: cardTextStyle),
         ],
       ),
     );
