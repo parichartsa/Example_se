@@ -12,7 +12,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        textTheme: GoogleFonts.interTextTheme(),
+        textTheme: GoogleFonts
+            .interTextTheme(), // Replace with your custom font if desired
       ),
       home: MyHomePage(),
     );
@@ -24,22 +25,22 @@ class MyHomePage extends StatelessWidget {
     {
       'title': 'Pre-Test',
       'icon': Icons.edit,
-      'color': Color(0xFF7766C6).withOpacity(0.8),
+      'color': Color(0xFF7766C6), // Softer color
     },
     {
       'title': 'O-NET',
       'icon': Icons.book,
-      'color': Color(0xFFE0DFFD),
+      'color': Color(0xFFE0DFFD).withOpacity(0.8),
     },
     {
       'title': 'GAT',
       'icon': Icons.backpack,
-      'color': Color(0xFFF9B0C3),
+      'color': Color(0xFFF9B0C3).withOpacity(0.8),
     },
     {
       'title': 'วิชาสามัญ',
       'icon': Icons.school,
-      'color': Color(0xABFFC212),
+      'color': Color(0xFFFFC212).withOpacity(0.8),
     },
   ];
 
@@ -72,10 +73,10 @@ class MyHomePage extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color.fromRGBO(119, 102, 198, 0.4), // Purple
-              Color.fromRGBO(249, 176, 195, 0.4), // Pink
-              Color.fromRGBO(255, 194, 18, 0.4), // Yellow
-              Colors.white, // White
+              Color(0xFF7766C6).withOpacity(0.4),
+              Color(0xFFF9B0C3).withOpacity(0.4),
+              Color(0xFFFFC212).withOpacity(0.4),
+              Colors.white.withOpacity(0.8),
             ],
             stops: [0.25, 0.5, 0.75, 1.0],
           ),
@@ -94,6 +95,7 @@ class MyHomePage extends StatelessWidget {
               return _buildCard(
                 items[index]['title'],
                 items[index]['icon'],
+                cardTextStyle,
                 items[index]['color'],
               );
             },
@@ -103,7 +105,8 @@ class MyHomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildCard(String title, IconData iconData, Color backgroundColor) {
+  Widget _buildCard(String title, IconData iconData, TextStyle textStyle,
+      Color backgroundColor) {
     return Container(
       decoration: BoxDecoration(
         color: backgroundColor,
@@ -120,9 +123,10 @@ class MyHomePage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Icon(iconData, size: 48, color: Colors.black),
+          Icon(iconData,
+              size: 48, color: Colors.black), // Set icon color to white
           SizedBox(height: 8),
-          Text(title, style: cardTextStyle),
+          Text(title, style: textStyle),
         ],
       ),
     );
