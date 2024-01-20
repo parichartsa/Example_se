@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         textTheme: GoogleFonts
-            .interTextTheme(), // Replace with your custom font if desired
+            .interTextTheme(), 
       ),
       home: MyHomePage(),
     );
