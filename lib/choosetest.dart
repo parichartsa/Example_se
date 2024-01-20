@@ -25,7 +25,7 @@ class MyHomePage extends StatelessWidget {
     {
       'title': 'Pre-Test',
       'icon': Icons.edit,
-      'color': Color(0xFF7766C6), // Softer color
+      'color': Color(0xFF7766C6), 
     },
     {
       'title': 'O-NET',
