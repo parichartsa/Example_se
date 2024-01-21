@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Homepage_demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: Colors.white,
@@ -81,12 +81,37 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
               ),
-              // ... Your other widgets ...
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildInfoCard(
+                      'ข้อสอบแนะนำ',
+                      'ข้อสอบแนะนำสำหรับคุณ',
+                      Icons.book,
+                      Colors.pink.shade100,
+                      Colors.pink.shade900,
+                    ),
+                  ),
+                  Expanded(
+                    child: _buildInfoCard(
+                      'หลักสูตรเร่งรัด',
+                      'หลักสูตรเร่งรัดสำหรับเรียนในวันหยุด',
+                      Icons.access_alarm,
+                      Colors.blue.shade100,
+                      Colors.blue.shade900,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              SecondBannerWidget(), // Second banner placed here
+              // Additional widgets can be added here
             ],
           ),
         ),
       ),
-      // ... BottomNavigationBar goes here ...
+      // BottomNavigationBar can be added here
     );
   }
 
@@ -111,39 +136,89 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildInfoCard(String title, String subtitle, IconData icon,
+      Color bgColor, Color textColor) {
+    return Container(
+      height: 200,
+      child: Card(
+        margin: EdgeInsets.all(10),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Icon(icon, size: 28, color: textColor),
+              Text(title,
+                  style: TextStyle(
+                      color: textColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14)),
+              Text(subtitle,
+                  style: TextStyle(
+                      color: textColor.withOpacity(0.7), fontSize: 12)),
+              ElevatedButton(
+                onPressed: () {
+                  // Handle button press
+                },
+                child: Text('เริ่มต้น'),
+                style: ElevatedButton.styleFrom(
+                  primary: bgColor,
+                  onPrimary: textColor,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class BannerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    double bannerHeight = 100.0;
-
     return Container(
-      height: bannerHeight,
-      margin: EdgeInsets.all(10), // Add margin for spacing around the banner
+      height: 100.0,
+      margin: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius:
-            BorderRadius.circular(10), // Rounded corners for the frame
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: Offset(0, 3), // changes position of shadow
-          ),
-        ],
+        color: Color(0xFFE0DFFD),
+        borderRadius: BorderRadius.circular(10.0),
       ),
       child: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Text(
-            'แบนเนอร์ประจำวันนี้', // Replace with your desired text
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
+        child: Text(
+          'แบนเนอร์ประจำวันนี้',
+          style: TextStyle(
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SecondBannerWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 100.0,
+      margin: EdgeInsets.all(10.0),
+      decoration: BoxDecoration(
+        color: Color(0xFFDFFDE0), // Green color for the second banner
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: Center(
+        child: Text(
+          '-',
+          style: TextStyle(
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
           ),
         ),
       ),
