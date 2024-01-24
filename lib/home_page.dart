@@ -19,7 +19,20 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,13 +118,30 @@ class HomePage extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 20),
-              SecondBannerWidget(), // Second banner placed here
-              // Additional widgets can be added here
+              SecondBannerWidget(),
             ],
           ),
         ),
       ),
-      // BottomNavigationBar can be added here
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+            label: 'Profile',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.blue,
+        onTap: _onItemTapped,
+      ),
     );
   }
 
@@ -209,12 +239,12 @@ class SecondBannerWidget extends StatelessWidget {
       height: 100.0,
       margin: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-        color: Color(0xFFDFFDE0), // Green color for the second banner
+        color: Color(0xFFDFFDE0),
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Center(
         child: Text(
-          '-',
+          '-', // Example text for the second banner
           style: TextStyle(
             fontSize: 24.0,
             fontWeight: FontWeight.bold,
