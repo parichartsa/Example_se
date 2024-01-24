@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'test.dart'; // นำเข้า TestPage จากไฟล์ test.dart
 
 void main() {
   runApp(DescriptionPage());
@@ -41,14 +42,14 @@ class ExamPreviewPage extends StatelessWidget {
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
             colors: [
-              Color(0xFFEDE7F6), 
-              Color(0xFFE1BEE7), 
+              Color(0xFFEDE7F6),
+              Color(0xFFE1BEE7),
+            ],
           ),
         ),
         child: Center(
           child: ConstrainedBox(
-            constraints: BoxConstraints(
-                maxWidth: 600), 
+            constraints: BoxConstraints(maxWidth: 600),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -78,10 +79,14 @@ class ExamPreviewPage extends StatelessWidget {
                 ),
                 SizedBox(height: 24),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => TestPage()),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.indigo, // Button background color
-                    onPrimary: Colors.white, // Button text color
+                    primary: Colors.indigo,
+                    onPrimary: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
                     ),
