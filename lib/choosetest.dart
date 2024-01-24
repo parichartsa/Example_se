@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'description.dart'; // ตรวจสอบว่าชื่อไฟล์นี้ถูกต้อง
 
 void main() {
   runApp(MyApp());
@@ -12,8 +12,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        textTheme: GoogleFonts
-            .interTextTheme(), 
+        textTheme: TextTheme(), 
       ),
       home: MyHomePage(),
     );
@@ -25,7 +24,7 @@ class MyHomePage extends StatelessWidget {
     {
       'title': 'Pre-Test',
       'icon': Icons.edit,
-      'color': Color(0xFF7766C6), 
+      'color': Color(0xFF7766C6),
     },
     {
       'title': 'O-NET',
@@ -97,6 +96,7 @@ class MyHomePage extends StatelessWidget {
                 items[index]['icon'],
                 cardTextStyle,
                 items[index]['color'],
+                context,
               );
             },
           ),
@@ -105,29 +105,36 @@ class MyHomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildCard(String title, IconData iconData, TextStyle textStyle,
-      Color backgroundColor) {
-    return Container(
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 3,
-            offset: Offset(0, 1),
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Icon(iconData,
-              size: 48, color: Colors.black), // Set icon color to white
-          SizedBox(height: 8),
-          Text(title, style: textStyle),
-        ],
+  Widget _buildCard(String title, IconData iconData, TextStyle textStyle, Color backgroundColor, BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        if (title == 'Pre-Test') {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => DescriptionPage()),
+          );
+        }
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              spreadRadius: 1,
+              blurRadius: 3,
+              offset: Offset(0, 1),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(iconData, size: 48, color: Colors.black),
+            SizedBox(height: 8),
+            Text(title, style: textStyle),
+          ],
+        ),
       ),
     );
   }

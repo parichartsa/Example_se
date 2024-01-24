@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(DescriptionPage());
 }
 
-class MyApp extends StatelessWidget {
+class DescriptionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -41,15 +41,14 @@ class ExamPreviewPage extends StatelessWidget {
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
             colors: [
-              Color(0xFFEDE7F6), // The top right color
-              Color(0xFFE1BEE7), // The bottom left color
-            ],
+              Color(0xFFEDE7F6), 
+              Color(0xFFE1BEE7), 
           ),
         ),
         child: Center(
           child: ConstrainedBox(
             constraints: BoxConstraints(
-                maxWidth: 600), // Use appropriate max width for tablets
+                maxWidth: 600), 
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
