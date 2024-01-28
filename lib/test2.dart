@@ -76,11 +76,11 @@ class _QuizPageState extends State<QuizPage> {
       height: 50,
       margin: EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
-        color: isSelected ? Color.fromARGB(255, 228, 176, 5) : Colors.white,
+        color: isSelected ? Color.fromRGBO(255, 194, 18, 0.4) : Colors.white,
         borderRadius: BorderRadius.circular(12.0),
         border: Border.all(
           color: isSelected
-              ? Color.fromARGB(255, 228, 176, 5)
+              ? Color.fromRGBO(255, 194, 18, 0.2)
               : Colors.black.withOpacity(0.05),
           width: 1.0,
         ),
