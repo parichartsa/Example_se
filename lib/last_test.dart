@@ -249,7 +249,7 @@ class _QuizPageState extends State<QuizPage> {
                   child: ElevatedButton(
                     onPressed: _backAction,
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.deepPurple,
+                      primary: Color.fromRGBO(70, 70, 122, 1),
                       onPrimary: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),

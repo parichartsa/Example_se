@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'test2.dart';
 
 void main() {
   runApp(TestPage());
@@ -61,7 +62,13 @@ class _QuizPageState extends State<QuizPage> {
     });
   }
 
-  void _submitAnswer() {}
+  void _submitAnswer() {
+    if (_selectedAnswer != null) {
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => Testpage2()),
+      );
+    }
+  }
 
   Widget _buildOption(String option, int index) {
     bool isSelected = _selectedAnswer == index;
@@ -174,7 +181,7 @@ class _QuizPageState extends State<QuizPage> {
               padding: EdgeInsets.all(16),
               margin: EdgeInsets.only(bottom: 24),
               decoration: BoxDecoration(
-                color: Colors.white, // Set background color
+                color: Colors.white,
                 border: Border.all(
                   color: Colors.black.withOpacity(0.05),
                   width: 1.0,
@@ -186,7 +193,7 @@ class _QuizPageState extends State<QuizPage> {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.normal,
-                  color: Colors.black, // Set the color of the question text
+                  color: Colors.black,
                 ),
               ),
             ),
@@ -197,12 +204,12 @@ class _QuizPageState extends State<QuizPage> {
                 .toList(),
             SizedBox(height: 24),
             Container(
-              width: double.infinity, // Use double.infinity for full width
+              width: double.infinity,
               height: 50,
               child: ElevatedButton(
                 onPressed: _selectedAnswer != null ? _submitAnswer : null,
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.deepPurple,
+                  primary: Color.fromRGBO(70, 70, 122, 1), // Custom color using RGB values
                   onPrimary: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0),

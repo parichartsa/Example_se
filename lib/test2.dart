@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'test.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(Testpage2());
 }
 
-class MyApp extends StatelessWidget {
+class Testpage2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -88,7 +89,7 @@ class _QuizPageState extends State<QuizPage> {
       child: RadioListTile<int>(
         title: Text(
           option,
-          style: TextStyle(color: isSelected ? Colors.white : Colors.black),
+          style: TextStyle(color: isSelected ? Colors.black : Colors.black),
         ),
         value: index,
         groupValue: _selectedAnswer,
@@ -218,7 +219,7 @@ class _QuizPageState extends State<QuizPage> {
                   child: ElevatedButton(
                     onPressed: _backAction,
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.deepPurple,
+                      primary: Color.fromRGBO(70, 70, 122, 1),
                       onPrimary: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
@@ -237,12 +238,12 @@ class _QuizPageState extends State<QuizPage> {
                   ),
                 ),
                 SizedBox(width: 10),
-                // Next Button
+
                 Expanded(
                   child: ElevatedButton(
                     onPressed: _selectedAnswer != null ? _submitAnswer : null,
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.deepPurple,
+                      primary: Color.fromRGBO(70, 70, 122, 1),
                       onPrimary: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
