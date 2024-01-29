@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'description.dart'; 
+import 'description.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        textTheme: TextTheme(), 
+        textTheme: TextTheme(),
       ),
       home: MyHomePage(),
     );
@@ -37,7 +37,7 @@ class MyHomePage extends StatelessWidget {
       'color': Color(0xFFF9B0C3).withOpacity(0.8),
     },
     {
-      'title': 'วิชาสามัญ',
+      'title': 'PAT',
       'icon': Icons.school,
       'color': Color(0xFFFFC212).withOpacity(0.8),
     },
@@ -105,7 +105,8 @@ class MyHomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildCard(String title, IconData iconData, TextStyle textStyle, Color backgroundColor, BuildContext context) {
+  Widget _buildCard(String title, IconData iconData, TextStyle textStyle,
+      Color backgroundColor, BuildContext context) {
     return GestureDetector(
       onTap: () {
         if (title == 'Pre-Test') {
