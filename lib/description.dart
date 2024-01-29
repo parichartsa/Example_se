@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'test.dart'; // นำเข้า TestPage จากไฟล์ test.dart
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'test.dart';
 
 void main() {
   runApp(DescriptionPage());
@@ -16,6 +18,31 @@ class DescriptionPage extends StatelessWidget {
 }
 
 class ExamPreviewPage extends StatelessWidget {
+  Future<void> getTest(BuildContext context, String subject) async {
+    var url = Uri.parse('http://192.168.1.72:3001/api/exams/');
+
+    // Convert the Map to a JSON string
+    var requestBody = jsonEncode({
+      "subject": subject,
+    });
+
+    var response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: requestBody,
+    );
+
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      print("getTest successful: $data");
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => TestPage(data: data)),
+      );
+    } else {
+      print("getTest failed");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,11 +89,12 @@ class ExamPreviewPage extends StatelessWidget {
                 ),
                 SizedBox(height: 8),
                 Divider(
-                    height: 1,
-                    thickness: 1,
-                    color: Colors.black.withOpacity(0.1)),
+                  height: 1,
+                  thickness: 1,
+                  color: Colors.black.withOpacity(0.1),
+                ),
                 InfoTile(
-                  icon: Icons.description, // Changed to paper icon
+                  icon: Icons.description,
                   text: 'เวลาอีก 10 นาที',
                 ),
                 InfoTile(
@@ -80,9 +108,7 @@ class ExamPreviewPage extends StatelessWidget {
                 SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => TestPage()),
-                    );
+                    getTest(context, "biology");
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.indigo,
