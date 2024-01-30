@@ -119,7 +119,7 @@ Widget _buildOption(String option, int index) {
         });
       },
       activeColor: Colors.amber[700],
-      dense: false, // This ensures the text has enough space
+      dense: false,
       contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 10), // Adjust padding as needed
     ),
   );
