@@ -21,7 +21,7 @@ class ExamPreviewPage extends StatelessWidget {
   Future<void> getTest(BuildContext context, String subject) async {
     var url = Uri.parse('http://192.168.1.72:3001/api/exams/');
 
-    // Convert the Map to a JSON string
+    // Convert Map to a JSON string
     var requestBody = jsonEncode({
       "subject": subject,
     });
