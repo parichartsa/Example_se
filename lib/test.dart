@@ -1,21 +1,30 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'test2.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 void main() {
-  runApp(TestPage());
+  runApp(const TestPage(
+    data: null,
+  ));
 }
 
 class TestPage extends StatelessWidget {
+  final dynamic data;
+
+  const TestPage({Key? key, required this.data}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Quiz App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    // Your TestPage implementation using the 'data' parameter
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Test Page'),
       ),
-      home: QuizPage(),
+      body: Center(
+        child: Text('Data from ExamPreviewPage: $data'),
+      ),
     );
   }
 }
@@ -38,7 +47,7 @@ class _QuizPageState extends State<QuizPage> {
   ];
 
   // Countdown Timer
-  Duration _duration = Duration(minutes: 59, seconds: 32);
+  Duration _duration = const Duration(minutes: 59, seconds: 32);
   late Timer _timer;
 
   String getFormattedTime() {
@@ -51,12 +60,12 @@ class _QuizPageState extends State<QuizPage> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       if (_duration.inSeconds == 0) {
         _timer.cancel();
       } else {
         setState(() {
-          _duration -= Duration(seconds: 1);
+          _duration -= const Duration(seconds: 1);
         });
       }
     });
@@ -75,13 +84,14 @@ class _QuizPageState extends State<QuizPage> {
     return Container(
       width: double.infinity,
       height: 50,
-      margin: EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
-        color: isSelected ? Color.fromRGBO(255, 194, 18, 0.4) : Colors.white,
+        color:
+            isSelected ? const Color.fromRGBO(255, 194, 18, 0.4) : Colors.white,
         borderRadius: BorderRadius.circular(12.0),
         border: Border.all(
           color: isSelected
-              ? Color.fromRGBO(255, 194, 18, 0.2)
+              ? const Color.fromRGBO(255, 194, 18, 0.2)
               : Colors.black.withOpacity(0.05),
           width: 1.0,
         ),
@@ -107,14 +117,14 @@ class _QuizPageState extends State<QuizPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Pre-test ภาษาอังกฤษ',
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.white,
         centerTitle: true,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -124,7 +134,7 @@ class _QuizPageState extends State<QuizPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
+                const Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(Icons.book, size: 24.0),
@@ -140,8 +150,8 @@ class _QuizPageState extends State<QuizPage> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 6.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12.0),
                         border: Border.all(color: Colors.black54, width: 1.0),
@@ -149,17 +159,17 @@ class _QuizPageState extends State<QuizPage> {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.timer, size: 24.0),
-                          SizedBox(width: 8.0),
+                          const Icon(Icons.timer, size: 24.0),
+                          const SizedBox(width: 8.0),
                           Text(
                             getFormattedTime(),
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(width: 8.0),
+                    const SizedBox(width: 8.0),
                     GestureDetector(
                       onTap: () {
                         setState(() {
@@ -176,10 +186,10 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ],
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             Container(
-              padding: EdgeInsets.all(16),
-              margin: EdgeInsets.only(bottom: 24),
+              padding: const EdgeInsets.all(16),
+              margin: const EdgeInsets.only(bottom: 24),
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(
@@ -190,7 +200,7 @@ class _QuizPageState extends State<QuizPage> {
               ),
               child: Text(
                 question,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.normal,
                   color: Colors.black,
@@ -202,21 +212,23 @@ class _QuizPageState extends State<QuizPage> {
                 .entries
                 .map((entry) => _buildOption(entry.value, entry.key))
                 .toList(),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             Container(
               width: double.infinity,
               height: 50,
               child: ElevatedButton(
                 onPressed: _selectedAnswer != null ? _submitAnswer : null,
                 style: ElevatedButton.styleFrom(
-                  primary: Color.fromRGBO(70, 70, 122, 1), // Custom color using RGB values
+                  primary: const Color.fromRGBO(
+                      70, 70, 122, 1), // Custom color using RGB values
                   onPrimary: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0),
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 ),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text('ถัดไป', style: TextStyle(fontSize: 18)),
@@ -230,6 +242,27 @@ class _QuizPageState extends State<QuizPage> {
         ),
       ),
     );
+  }
+
+  Future<void> fetchBiologyData() async {
+    var url = Uri.parse(
+        'http://localhost:3001/api/exams/'); // Adjust the URL if needed
+
+    try {
+      var response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+        // Handle the fetched data
+        print(data);
+      } else {
+        // Handle the error
+        print('Request failed with status: ${response.statusCode}.');
+      }
+    } catch (e) {
+      // Handle the exception
+      print('Error: $e');
+    }
   }
 
   @override
