@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'test2.dart';
 import 'package:http/http.dart' as http;
@@ -19,36 +20,42 @@ class TestPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // Your TestPage implementation using the 'data' parameter
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Test Page'),
-      ),
-      body: Center(
-        child: Text('Data from ExamPreviewPage: $data'),
-      ),
+      
+      body: QuizPage(data: data),
     );
   }
 }
 
 class QuizPage extends StatefulWidget {
+  final Map<String, dynamic> data;
+
+
+  QuizPage({Key? key, required this.data}) : super(key: key);
+  
   @override
   _QuizPageState createState() => _QuizPageState();
 }
 
 class _QuizPageState extends State<QuizPage> {
+  
   int? _selectedAnswer;
   bool isBookmarked = false;
-  final String question =
-      'The boy claimed that the pencil box belonged to him, but soon everybody found out that he _____.';
-  final List<String> options = [
-    'is lying',
-    'tells a lie',
-    'has told a lie',
-    'had told a lie'
-  ];
+  int currentQuestionIndex = 0;
+  int totalQuestions = 0;
+  
 
   // Countdown Timer
-  Duration _duration = const Duration(minutes: 59, seconds: 32);
+  Duration _duration = const Duration(minutes: 59, seconds: 59);
   late Timer _timer;
+
+    // Helper method to get the current question text
+  String get currentQuestionText => widget.data['exam']['questions'][currentQuestionIndex]['question_text'];
+
+  int get totalQuestionIndex => widget.data['exam']['questions'].length;
+
+  // Helper method to get the current question options
+  List<String> get currentOptions => List<String>.from(widget.data['exam']['questions'][currentQuestionIndex]['options']);
+
 
   String getFormattedTime() {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
@@ -60,6 +67,8 @@ class _QuizPageState extends State<QuizPage> {
   @override
   void initState() {
     super.initState();
+    print('Received data: ${totalQuestionIndex}');
+  
     _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       if (_duration.inSeconds == 0) {
         _timer.cancel();
@@ -79,39 +88,43 @@ class _QuizPageState extends State<QuizPage> {
     }
   }
 
-  Widget _buildOption(String option, int index) {
-    bool isSelected = _selectedAnswer == index;
-    return Container(
-      width: double.infinity,
-      height: 50,
-      margin: const EdgeInsets.only(bottom: 10),
-      decoration: BoxDecoration(
-        color:
-            isSelected ? const Color.fromRGBO(255, 194, 18, 0.4) : Colors.white,
-        borderRadius: BorderRadius.circular(12.0),
-        border: Border.all(
-          color: isSelected
-              ? const Color.fromRGBO(255, 194, 18, 0.2)
-              : Colors.black.withOpacity(0.05),
-          width: 1.0,
+Widget _buildOption(String option, int index) {
+  bool isSelected = _selectedAnswer == index;
+
+  return Container(
+    width: double.infinity,
+    margin: const EdgeInsets.only(bottom: 10),
+    decoration: BoxDecoration(
+      color: isSelected ? const Color.fromRGBO(255, 194, 18, 0.4) : Colors.white,
+      borderRadius: BorderRadius.circular(12.0),
+      border: Border.all(
+        color: isSelected
+            ? const Color.fromRGBO(255, 194, 18, 0.2)
+            : Colors.black.withOpacity(0.05),
+        width: 1.0,
+      ),
+    ),
+    child: RadioListTile<int>(
+      title: Text(
+        option,
+        style: TextStyle(
+          color: isSelected ? Colors.black : Colors.black,
         ),
       ),
-      child: RadioListTile<int>(
-        title: Text(
-          option,
-          style: TextStyle(color: isSelected ? Colors.black : Colors.black),
-        ),
-        value: index,
-        groupValue: _selectedAnswer,
-        onChanged: (int? value) {
-          setState(() {
-            _selectedAnswer = value;
-          });
-        },
-        activeColor: Colors.amber[700],
-      ),
-    );
-  }
+      value: index,
+      groupValue: _selectedAnswer,
+      onChanged: (int? value) {
+        setState(() {
+          _selectedAnswer = value;
+        });
+      },
+      activeColor: Colors.amber[700],
+      dense: false, // This ensures the text has enough space
+      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 10), // Adjust padding as needed
+    ),
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -134,13 +147,13 @@ class _QuizPageState extends State<QuizPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Row(
+                Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(Icons.book, size: 24.0),
                     SizedBox(width: 8.0),
                     Text(
-                      '1/10',
+                      '${currentQuestionIndex+1}/${totalQuestionIndex}',
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
@@ -199,7 +212,7 @@ class _QuizPageState extends State<QuizPage> {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
-                question,
+                currentQuestionText,
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.normal,
@@ -207,11 +220,16 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
             ),
-            ...options
-                .asMap()
-                .entries
-                .map((entry) => _buildOption(entry.value, entry.key))
-                .toList(),
+            // ...options
+            //     .asMap()
+            //     .entries
+            //     .map((entry) => _buildOption(entry.value, entry.key))
+            //     .toList(),
+            ...currentOptions
+              .asMap()
+              .entries
+              .map((entry) => _buildOption(entry.value, entry.key))
+              .toList(),
             const SizedBox(height: 24),
             Container(
               width: double.infinity,
@@ -242,27 +260,6 @@ class _QuizPageState extends State<QuizPage> {
         ),
       ),
     );
-  }
-
-  Future<void> fetchBiologyData() async {
-    var url = Uri.parse(
-        'http://localhost:3001/api/exams/'); // Adjust the URL if needed
-
-    try {
-      var response = await http.get(url);
-
-      if (response.statusCode == 200) {
-        var data = json.decode(response.body);
-        // Handle the fetched data
-        print(data);
-      } else {
-        // Handle the error
-        print('Request failed with status: ${response.statusCode}.');
-      }
-    } catch (e) {
-      // Handle the exception
-      print('Error: $e');
-    }
   }
 
   @override
