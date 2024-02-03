@@ -8,6 +8,8 @@ void main() {
 }
 
 class DescriptionPage extends StatelessWidget {
+  const DescriptionPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,7 +21,7 @@ class DescriptionPage extends StatelessWidget {
 
 class ExamPreviewPage extends StatelessWidget {
   Future<void> getTest(BuildContext context, String subject) async {
-    var url = Uri.parse('http://192.168.1.72:3001/api/exams/');
+    var url = Uri.parse('http://192.168.1.195:3001/api/exams/');
 
     // Convert Map to a JSON string
     var requestBody = jsonEncode({
@@ -54,7 +56,8 @@ class ExamPreviewPage extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-          'Pre-Test ภาษาอังกฤษ',
+          //ยังไม่ได้ดึง
+          'Bio Pat2 62',
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
